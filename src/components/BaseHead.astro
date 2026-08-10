@@ -13,6 +13,8 @@ interface Props {
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const { title, description, image } = Astro.props;
+
+const plausibleInit = `window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()`;
 ---
 
 <!-- Global Metadata -->
@@ -47,3 +49,13 @@ const { title, description, image } = Astro.props;
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
+
+<!-- Privacy-friendly analytics by Plausible -->
+{
+	import.meta.env.PROD && (
+		<Fragment>
+			<script is:inline async src="https://plausible.io/js/pa-qCJ7XvP2JNAEka_ajgn0X.js" />
+			<script is:inline set:html={plausibleInit} />
+		</Fragment>
+	)
+}
